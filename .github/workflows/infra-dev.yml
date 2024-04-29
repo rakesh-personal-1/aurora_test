@@ -51,7 +51,7 @@ jobs:
         run: exit 1
 
   deploy:
-    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     #strategy:
     #  max-parallel: 1
@@ -85,7 +85,3 @@ jobs:
       - name: Terraform Apply
         #if: github.event.pull_request.merged == true
         #run: terraform apply -auto-approve
-
-  apply:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
