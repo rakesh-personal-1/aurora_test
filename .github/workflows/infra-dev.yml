@@ -14,7 +14,7 @@ env:
 
 defaults:
   run:
-    #working-directory: project1/dev
+    working-directory: project1/dev
     shell: bash
 
 jobs:
