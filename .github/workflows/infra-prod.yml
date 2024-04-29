@@ -1,4 +1,4 @@
-name: build and deploy infra
+name: build and deploy infra prod
 
 on: 
   workflow_dispatch: #### To run the workflow manually
