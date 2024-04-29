@@ -4,8 +4,7 @@ on:
   workflow_dispatch: #### To run the workflow manually
   push:
     branches: 
-      - develop
-      - master
+      - '*'
   pull_request:
     branches:
       - develop
