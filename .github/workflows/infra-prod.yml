@@ -3,6 +3,8 @@ name: build and deploy infra prod
 on: 
   workflow_dispatch: #### To run the workflow manually
   push: 
+    branches:
+      - main
   pull_request:
     branches:
       - main
