@@ -51,7 +51,7 @@ jobs:
         run: exit 1
 
   deploy:
-    #if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     #strategy:
     #  max-parallel: 1
