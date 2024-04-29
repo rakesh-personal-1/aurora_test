@@ -2,13 +2,10 @@ name: build and deploy infra
 
 on: 
   workflow_dispatch: #### To run the workflow manually
-  push:
-    branches: 
-      - '*'
+  push: 
   pull_request:
     branches:
       - develop
-      - master
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
