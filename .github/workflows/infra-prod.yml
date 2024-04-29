@@ -3,9 +3,10 @@ name: build and deploy infra
 on: 
   workflow_dispatch: #### To run the workflow manually
   push: 
+    branches:
+      - main
   pull_request:
     branches:
-      - develop
       - main
 
 env:
@@ -14,7 +15,7 @@ env:
 
 defaults:
   run:
-    working-directory: project1/dev
+    working-directory: project1/prod
 
 jobs:
   build:
