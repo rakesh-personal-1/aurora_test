@@ -9,7 +9,7 @@ on:
   pull_request:
     branches:
       - develop
-      - master
+      - main
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
