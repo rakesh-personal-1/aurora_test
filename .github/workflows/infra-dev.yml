@@ -20,7 +20,7 @@ jobs:
 
     defaults:
       run:
-      working-directory: project1/dev
+        working-directory: project1/dev
 
     steps:
       - name: Checkout
