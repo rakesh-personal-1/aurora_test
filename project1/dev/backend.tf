@@ -1,16 +1,22 @@
-#Create an S3 bucket
-resource "aws_s3_bucket" "aws_s3_bucket_versioning" {
-    bucket = "auroradev-terraform-state-backend"
-    object_lock_enabled = true
-    tags = {
-        Name = "S3 Remote Terraform State Store"
-    }
+resource "aws_s3_bucket" "default" {
+  bucket        = "aurora-terraform-state-backend"
+  force_destroy = true
+
 }
 
-# Configure server-side encryption for the S3 bucket
-resource "aws_s3_bucket_server_side_encryption_configuration" "bucket_sse_config" {
-  bucket = aws_s3_bucket.aws_s3_bucket_versioning.bucket
-  
+resource "aws_s3_bucket_versioning" "default" {
+
+  bucket = one(aws_s3_bucket.default[*].id)
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "default" {
+
+  bucket = one(aws_s3_bucket.default[*].id)
+
   rule {
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
@@ -18,28 +24,26 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "bucket_sse_config
   }
 }
 
-#Create DynamoDB table
-resource "aws_dynamodb_table" "terraform-lock" {
-    name           = "terraform_state"
-    read_capacity  = 5
-    write_capacity = 5
-    hash_key       = "LockID"
-    attribute {
-        name = "LockID"
-        type = "S"
-    }
-    tags = {
-        "Name" = "DynamoDB Terraform State Lock Table"
-    }
+resource "aws_dynamodb_table" "with_server_side_encryption" {
+  name                        = "terraform_state"
+  read_capacity               = 5
+  write_capacity              = 5
+  deletion_protection_enabled = true
+
+  # https://www.terraform.io/docs/backends/types/s3.html#dynamodb_table
+  hash_key = "LockID"
+
+  server_side_encryption { #tfsec:ignore:aws-dynamodb-table-customer-key
+    enabled = true
+  }
+
+  point_in_time_recovery {
+    enabled = true
+  }
+
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+
 }
-
-#Map S3 and DynamoDB as the backend
-
-#terraform {
-#  backend "s3" {
-#    bucket         = "auroradev-terraform-state-backend"
-#    key            = "terraform.tfstate"
-#    region         = "us-east-1"
-#    dynamodb_table = "terraform_state"
-#  }
-#}
