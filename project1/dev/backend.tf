@@ -1,22 +1,21 @@
 #Create an S3 bucket
-resource "aws_s3_bucket" "bucket" {
+resource "aws_s3_bucket" "aws_s3_bucket_versioning" {
     bucket = "auroradev-terraform-state-backend"
-    versioning {
-        enabled = true
-    }
-    server_side_encryption_configuration {
-        rule {
-            apply_server_side_encryption_by_default {
-                sse_algorithm = "AES256"
-            }
-        }
-    }
-    object_lock_configuration {
-        object_lock_enabled = "Enabled"
-    }
+    object_lock_enabled = true
     tags = {
         Name = "S3 Remote Terraform State Store"
     }
+}
+
+# Configure server-side encryption for the S3 bucket
+resource "aws_s3_bucket_server_side_encryption_configuration" "bucket_sse_config" {
+  bucket = aws_s3_bucket.aws_s3_bucket_versioning.bucket
+  
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
 }
 
 #Create DynamoDB table
