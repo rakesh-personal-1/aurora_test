@@ -38,9 +38,9 @@ resource "aws_dynamodb_table" "terraform-lock" {
 
 terraform {
   backend "s3" {
-    bucket         = "angelo-terraform-state-backend"
+    bucket         = "auroradev-terraform-state-backend"
     key            = "terraform.tfstate"
-    region         = "eu-west-1"
+    region         = "us-east-1"
     dynamodb_table = "terraform_state"
   }
 }
