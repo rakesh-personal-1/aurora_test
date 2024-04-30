@@ -28,7 +28,7 @@ resource "aws_dynamodb_table" "with_server_side_encryption" {
   name                        = "terraform_state"
   read_capacity               = 5
   write_capacity              = 5
-  deletion_protection_enabled = true
+  deletion_protection_enabled = false
 
   # https://www.terraform.io/docs/backends/types/s3.html#dynamodb_table
   hash_key = "LockID"
@@ -46,4 +46,13 @@ resource "aws_dynamodb_table" "with_server_side_encryption" {
     type = "S"
   }
 
+}
+
+terraform {
+  backend "s3" {
+    bucket         = "aurora-terraform-state-backend"
+    key            = "terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform_state"
+  }
 }
