@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "default" {
 
 resource "aws_s3_bucket_versioning" "default" {
 
-  bucket = one(aws_s3_bucket.default[*].id)
+  bucket = "aurora-terraform-state-backend"
 
   versioning_configuration {
     status = "Enabled"
@@ -15,7 +15,7 @@ resource "aws_s3_bucket_versioning" "default" {
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "default" {
 
-  bucket = one(aws_s3_bucket.default[*].id)
+  bucket = "aurora-terraform-state-backend"
 
   rule {
     apply_server_side_encryption_by_default {
