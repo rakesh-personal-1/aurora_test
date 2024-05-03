@@ -41,7 +41,7 @@ jobs:
 
       - name: List .tfvars files
         run: |
-          TFVARS_FILES=$(find ./env -type f -name '*.tfvars')
+          TFVARS_FILES=$(find . -type f -name '*.tfvars')
           echo "$TFVARS_FILES" > tfvars_files.txt
           cat tfvars_files.txt
 
