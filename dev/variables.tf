@@ -3,6 +3,6 @@ variable "acu_period" {
 }
 
 variable "cluster_identifier" {
-  type = string
+  type        = string
   description = "Name of the aurora cluster"
 }
